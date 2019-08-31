@@ -59,9 +59,6 @@ const App = () => {
               return err.response
             })
   }
- 
-  console.log(previous)
-  console.log(next)
 
   if(!characters) return <h2>loading...</h2>
 
@@ -69,7 +66,7 @@ const App = () => {
     <div className="App">
       <h1 className="Header">React Wars</h1>
       {previous && <Button onClick={() => getCharacters('previous')}>Previous</Button>}
-  { next && <Button onClick={() => getCharacters('next')}>Next</Button> }
+      { next && <Button onClick={() => getCharacters('next')}>Next</Button> }
       <CharacterList>
         {
           characters.map((character, indx) => {
