@@ -7,10 +7,11 @@ import './StarWars.css'
 const ListItem = styled.li`
     border: 1px solid black;
     border-radius: .5rem;
-    width: 33%;
+    width: 30%;
     display: flex;
     flex-direction: column;
     background: rgba(0, 0, 0, .7);
+    margin: 1rem 0 0 1rem;
 `
 
 function Character(props) {
@@ -31,10 +32,10 @@ function Character(props) {
     return (
         <ListItem>
             <h4>{name}</h4>
-            <p>{birth_year}</p>
-            <p>{home}</p>
-            <p>{height}</p>
-            <p>{gender === 'n/a' ? ' ' : gender}</p>
+            <p>Born: {birth_year}</p>
+            <p>Homeworld: {home}</p>
+            <p>Height: {height}</p>
+            <p>{(gender === 'n/a' || gender === 'none' )? ' ' : gender}</p>
         </ListItem>
     )
 }

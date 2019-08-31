@@ -14,14 +14,30 @@ const CharacterList = styled.ul`
   padding: 2rem;
 `
 
+const Button = styled.button`
+  margin-left: 1rem;
+  width: 8rem;
+  height: 3rem;
+  border-radius: .5rem;
+  font-size: 1rem;
+  &:hover {
+    background-color: black;
+    color: white;
+  }
+`
+
 const App = () => {
   const mount = 'mount'
   const [characters, setCharacters] = useState([])
+  const [previous, setPrevious] = useState()
+  const [next, setNext] = useState()
 
   useEffect(() => {
     axios.get('https://swapi.co/api/people/')
       .then(res => {
         setCharacters(res.data.results)
+        setPrevious(res.data.previous)
+        setNext(res.data.next)
         return res.data
       })
       .catch(err => {
@@ -29,12 +45,31 @@ const App = () => {
       })
 
   }, [mount])
+
+  const getCharacters = (list) => {
+    let url = list === 'next' ? next : previous 
+    return axios.get(`${url}`)
+            .then(res => {
+              setCharacters(res.data.results)
+              setPrevious(res.data.previous)
+              setNext(res.data.next)
+              return res.data
+            })
+            .catch(err => {
+              return err.response
+            })
+  }
  
+  console.log(previous)
+  console.log(next)
+
   if(!characters) return <h2>loading...</h2>
 
   return (
     <div className="App">
       <h1 className="Header">React Wars</h1>
+      {previous && <Button onClick={() => getCharacters('previous')}>Previous</Button>}
+  { next && <Button onClick={() => getCharacters('next')}>Next</Button> }
       <CharacterList>
         {
           characters.map((character, indx) => {
